@@ -15,3 +15,15 @@ class SupportOffice(models.Model):
 
     def __str__(self):
         return self.name
+class Expenditure(models.Model):
+    expenditure_text = models.CharField(max_length = 200)
+    exp_date = models.DateTimeField('Date of Expenditure')
+    amount = IntegerField('Amount spent')
+
+    def __str__(self):
+        return self.expenditure_text
+
+class Payment(models.Model):
+    payment_text = models.CharField(max_length = 200)
+    pay_date = models.DateTimeField('Payment Date')
+    amount = IntegerField('Amount paid')
