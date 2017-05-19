@@ -1,13 +1,7 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
-class Donor(models.Model):
-    name = models.CharField(max_length = 200)
-    physical_address = models.CharField(max_length = 200)
-    email_address = models.CharField(max_length = 200)
-
-    def __str__(self):
-        return self.name
 
 class SupportOffice(models.Model):
     name = models.CharField(max_length = 200)
@@ -15,10 +9,39 @@ class SupportOffice(models.Model):
 
     def __str__(self):
         return self.name
+
+class Project(models.Model):
+    """model class for the project table in the database,all information about the project can be derived from here"""
+    project_name = models.CharField(max_length = 200)
+    project_identifier = models.CharField(max_length = 200)
+    support_office = models.ForeignKey(SupportOffice, on_delete = models.CASCADE)
+    start_date = models.DateTimeField('Start date')
+    end_date = models.DateTimeField('End Date')
+    description = models.CharField(max_length = 200)
+    grant_amount = models.IntegerField('Grant Amount')
+
+    def __str__(self):
+        return self.project_name
+
+    def get_status(self):
+        """Method determies the status of the project whether future, current, past"""
+
+class Donor(models.Model):
+    name = models.CharField(max_length = 200)
+    physical_address = models.CharField(max_length = 200)
+    email_address = models.CharField(max_length = 200)
+    project = models.ForeignKey(Project, on_delete = models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+
 class Expenditure(models.Model):
     expenditure_text = models.CharField(max_length = 200)
     exp_date = models.DateTimeField('Date of Expenditure')
-    amount = IntegerField('Amount spent')
+    amount_spent = models.IntegerField('Amount spent')
+    project = models.ForeignKey(Project, on_delete = models.CASCADE)
 
     def __str__(self):
         return self.expenditure_text
@@ -26,25 +49,9 @@ class Expenditure(models.Model):
 class Payment(models.Model):
     payment_text = models.CharField(max_length = 200)
     pay_date = models.DateTimeField('Payment Date')
-    amount = IntegerField('Amount paid')
+    amount_paid = models.IntegerField('Amount paid')
+    project = models.ForeignKey(Project, on_delete = models.CASCADE )
+
 
     def __str__(self):
         return self.payment_text
-
-class Project(models.Model):
-    name = models.CharField(max_length = 200)
-    project_identifier = models.CharField(max_length = 200)
-    donor = models.ForeignKey(Donor, on_delete = models.CASCADE)
-    support_office = models.ForeignKey(SupportOffice, on_delete = models.CASCADE)
-    start_date = models.DateTimeField('Start date')
-    end_date = models.DateTimeField('End Date')
-    status = models.CharField(max_length =  50)
-    description = models.CharField(max_length = 200)
-    expenditure =  models.ForeignKey(Expenditure, on_delete = models.CASCADE)
-    payment = models.ForeignKey(Expenditure, on_delete = models.CASCADE)
-    grant_amount = models.IntegerField('Grant Amount')
-
-    def __str__(self):
-        return self.name
-
-        
