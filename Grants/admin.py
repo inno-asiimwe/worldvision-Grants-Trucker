@@ -17,8 +17,6 @@ class PaymentInline(admin.TabularInline):
     Extra = 2
 
 
-
-
 class ProjectAdmin(admin.ModelAdmin):
     """Customising the admin area for project  """
     list_display = ('project_name', 'support_office','start_date', 'end_date', 'grant_amount', 'get_status')
@@ -37,9 +35,9 @@ class ExpenditureAdmin(admin.ModelAdmin):
     list_filter = ['exp_date']
     search_fields = ['expenditure_text', 'exp_date', 'amount_spent', 'project']
 
-class PaymentsAdmin(admin.ModelAdmin):
+class PaymentAdmin(admin.ModelAdmin):
     """Customising Admin area list for payments"""
-    list_display = ('payment_text', 'pay_date', 'project', 'amount_paid')
+    list_display = ('payment_text', 'pay_date', 'amount_paid', 'project')
     list_filter = ['pay_date']
     search_fields = ['payment_text', 'pay_date', 'project', 'amount_paid']
 
@@ -48,4 +46,4 @@ class PaymentsAdmin(admin.ModelAdmin):
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Expenditure, ExpenditureAdmin)
-admin.site.register(Payment)
+admin.site.register(Payment, PaymentAdmin)
