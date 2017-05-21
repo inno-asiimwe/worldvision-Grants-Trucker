@@ -33,7 +33,7 @@ class Project(models.Model):
             return "Upcoming"
 
     def get_donor(self):
-        """"""
+        """should return a donor object for a project"""
         pass
 
 class Donor(models.Model):

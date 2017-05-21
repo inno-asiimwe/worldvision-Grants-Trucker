@@ -30,6 +30,12 @@ class ProjectMethodsTest(TestCase):
 
     def test_get_donor_success(self):
         """get_donor should return the correct Donor object for a Project object"""
-        project = Project(project_name = 'project1' )
-        donor = Donor(name = 'donor1', project = project.pk)
-        self.assertIs(project.get_donor, donor )
+        support_office = SupportOffice(name = 'Head Office', location = "Kampala")
+        support_office.save()
+        start = timezone.now() - datetime.timedelta(days = 365)
+        end = timezone.now() + datetime.timedelta(days = 365)
+        project = Project(project_name = 'project1', start_date = start, end_date = end, grant_amount = 8000, support_office = support_office )
+        project.save()
+        donor = Donor(name = 'donor1', project = project)
+        donor.save()
+        self.assertQuerysetEqual(project.get_donor(), ['<Donor: donor1>',] )

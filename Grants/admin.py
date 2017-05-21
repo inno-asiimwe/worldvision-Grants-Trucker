@@ -19,7 +19,7 @@ class PaymentInline(admin.TabularInline):
 
 class ProjectAdmin(admin.ModelAdmin):
     """Customising the admin area for project  """
-    list_display = ('project_name', 'support_office','start_date', 'end_date', 'grant_amount', 'get_status')
+    list_display = ('project_name', 'support_office', 'get_donor','start_date', 'end_date', 'grant_amount', 'get_status')
     list_filter = ['start_date']
     search_fields = ['project_name']
 
