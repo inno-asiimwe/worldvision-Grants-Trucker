@@ -25,6 +25,12 @@ class Project(models.Model):
 
     def get_status(self):
         """Method determies the status of the project whether future, current, past"""
+        if self.start_date <= timezone.now() <= self.end_date:
+            return "Open"
+        elif self.start_date < self.end_date < timezone.now():
+            return "Closed"
+        else:
+            return "Upcoming"
 
 class Donor(models.Model):
     name = models.CharField(max_length = 200)
