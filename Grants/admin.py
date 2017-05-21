@@ -21,7 +21,7 @@ class ProjectAdmin(admin.ModelAdmin):
     """Customising the admin area for project  """
     list_display = ('project_name', 'support_office','start_date', 'end_date', 'grant_amount', 'get_status')
     list_filter = ['start_date']
-    search_fields = ['project_name', 'support_office', 'support_office']
+    search_fields = ['project_name']
 
     fieldsets = [
      (None, {'fields':['project_name','project_identifier', 'support_office', 'description', 'grant_amount'] }),

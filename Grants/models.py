@@ -32,6 +32,10 @@ class Project(models.Model):
         else:
             return "Upcoming"
 
+    def get_donor(self):
+        """"""
+        pass
+
 class Donor(models.Model):
     name = models.CharField(max_length = 200)
     physical_address = models.CharField(max_length = 200)
