@@ -34,7 +34,7 @@ class Project(models.Model):
 
     def get_donor(self):
         """should return a donor object for a project"""
-        pass
+        return Donor.objects.filter(project = self.pk)
 
 class Donor(models.Model):
     name = models.CharField(max_length = 200)
