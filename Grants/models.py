@@ -36,6 +36,12 @@ class Project(models.Model):
         """should return a donor object for a project"""
         return Donor.objects.filter(project = self.pk)
 
+    def donor_name(self):
+        names = []
+        donors = self.get_donor()
+        for donor in donors:
+            names.append(donor.name)
+
 class Donor(models.Model):
     name = models.CharField(max_length = 200)
     physical_address = models.CharField(max_length = 200)
