@@ -41,6 +41,7 @@ class Project(models.Model):
         donors = self.get_donor()
         for donor in donors:
             names.append(donor.name)
+        return names 
 
 class Donor(models.Model):
     name = models.CharField(max_length = 200)

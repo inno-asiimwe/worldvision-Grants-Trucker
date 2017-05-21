@@ -39,4 +39,4 @@ class ProjectMethodsTest(TestCase):
         donor = Donor(name = 'donor1', project = project)
         donor.save()
         self.assertQuerysetEqual(project.get_donor(), ['<Donor: donor1>',] )
-        self.assertEqual(project.donor_name, ['donor1'])
+        self.assertEqual(project.donor_name(), ['donor1'])
