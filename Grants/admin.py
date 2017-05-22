@@ -2,9 +2,9 @@ from django.contrib import admin
 from . models import Donor, SupportOffice, Expenditure, Payment, Project
 
 # Register your models here.
-class DonorInline(admin.TabularInline):
-    model = Donor
-    Extra = 2
+# class DonorInline(admin.TabularInline):
+#     model = Donor
+#     Extra = 2
 
 class ExpenditureInline(admin.TabularInline):
     """In line for Expenditure using the Tabular layout"""
@@ -19,15 +19,15 @@ class PaymentInline(admin.TabularInline):
 
 class ProjectAdmin(admin.ModelAdmin):
     """Customising the admin area for project  """
-    list_display = ('project_name', 'support_office', 'get_donor','start_date', 'end_date', 'grant_amount', 'get_status')
+    list_display = ('project_name', 'support_office', 'donor','start_date', 'end_date', 'grant_amount', 'get_status')
     list_filter = ['start_date']
     search_fields = ['project_name']
 
     fieldsets = [
-     (None, {'fields':['project_name','project_identifier', 'support_office', 'description', 'grant_amount'] }),
+     (None, {'fields':['project_name','project_identifier', 'support_office','donor','description', 'grant_amount'] }),
      ('Date Information', {'fields':['start_date', 'end_date'], 'classes':['collapse']})]
 
-    inlines = [DonorInline, ExpenditureInline, PaymentInline]
+    inlines = [ExpenditureInline, PaymentInline]
 
 class ExpenditureAdmin(admin.ModelAdmin):
     """customising the admin area for project """
@@ -47,3 +47,5 @@ class PaymentAdmin(admin.ModelAdmin):
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Expenditure, ExpenditureAdmin)
 admin.site.register(Payment, PaymentAdmin)
+admin.site.register(SupportOffice)
+admin.site.register(Donor)

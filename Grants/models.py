@@ -10,14 +10,24 @@ class SupportOffice(models.Model):
     def __str__(self):
         return self.name
 
+class Donor(models.Model):
+    name = models.CharField(max_length = 200)
+    physical_address = models.CharField(max_length = 200)
+    email_address = models.CharField(max_length = 200)
+
+
+    def __str__(self):
+        return self.name
+
 class Project(models.Model):
     """model class for the project table in the database,all information about the project can be derived from here"""
     project_name = models.CharField(max_length = 200)
-    project_identifier = models.CharField(max_length = 200)
+    project_identifier = models.CharField(max_length = 200, blank = True, null = True)
     support_office = models.ForeignKey(SupportOffice, on_delete = models.CASCADE)
+    donor = models.ForeignKey(Donor, on_delete = models.CASCADE)
     start_date = models.DateTimeField('Start date')
     end_date = models.DateTimeField('End Date')
-    description = models.CharField(max_length = 200)
+    description = models.TextField('Project Description')
     grant_amount = models.IntegerField('Grant Amount')
 
     def __str__(self):
@@ -32,26 +42,17 @@ class Project(models.Model):
         else:
             return "Upcoming"
 
-    def get_donor(self):
-        """should return a donor object for a project"""
-        return Donor.objects.filter(project = self.pk)
-
-    def donor_name(self):
-        names = []
-        donors = self.get_donor()
-        for donor in donors:
-            names.append(donor.name)
-        return names 
-
-class Donor(models.Model):
-    name = models.CharField(max_length = 200)
-    physical_address = models.CharField(max_length = 200)
-    email_address = models.CharField(max_length = 200)
-    project = models.ForeignKey(Project, on_delete = models.CASCADE)
-
-    def __str__(self):
-        return self.name
-
+    # def get_donor(self):
+    #     """should return a donor object for a project"""
+    #     return Donor.objects.filter(project = self.pk)
+    #
+    # def donor_name(self):
+    #     names = []
+    #     donors = self.get_donor()
+    #     for donor in donors:
+    #         names.append(donor.name)
+    #     return names
+    get_status.short_description = 'Project Status'
 
 
 class Expenditure(models.Model):
